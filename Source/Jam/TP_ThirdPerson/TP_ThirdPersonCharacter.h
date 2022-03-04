@@ -6,7 +6,7 @@
 #include "GameFramework/Character.h"
 #include "TP_ThirdPersonCharacter.generated.h"
 
-//class UCableComponent;
+class UCableComponent;
 
 UCLASS(config=Game)
 class ATP_ThirdPersonCharacter : public ACharacter
@@ -34,7 +34,7 @@ public:
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Chain")
-	class UCableComponent* CableComponent;
+	UCableComponent* CableComponent;
 
 	UFUNCTION(BlueprintCallable, Category = "Chain")
 	void CreateConnection(FVector &Position);
