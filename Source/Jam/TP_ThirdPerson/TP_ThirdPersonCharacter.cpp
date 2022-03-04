@@ -124,13 +124,21 @@ void ATP_ThirdPersonCharacter::MoveRight(float Value)
 	}
 }
 
-void ATP_ThirdPersonCharacter::CreateConnection(FVector& Position)
+UCableComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActor)
 {
-	//if (CableComponent)
-	//{
-	//	if (GetWorld())
-	//	{
-	//		UCableComponent* chain = NewObject<UCableComponent>(this->GetOwner(), UCableComponent::StaticClass)
-	//	}
-	//}
+	if (CurrentChain)
+	{
+		if (GetWorld())
+		{
+			CurrentChain->SetAttachEndTo(CollidedActor, NAME_None);
+			
+			UCableComponent* chain = Cast<UCableComponent>(CollidedActor->AddComponentByClass(UCableComponent::StaticClass(), false, FTransform(), false));
+			chain->SetAttachEndTo(this, NAME_None);
+			//TotalChainLengthUsed += CalculateDistance(CurrentChain->GetAttachedActor()->GetActorLocation(), CollidedActor->GetActorLocation());
+			//chain->SetWorldLocation(Position);
+			Chains.Add(chain);
+			CurrentChain = chain;
+		}
+	}
+	return CurrentChain;
 }

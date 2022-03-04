@@ -34,16 +34,16 @@ public:
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Chain")
-	UCableComponent* CableComponent;
+	TArray<UCableComponent*> Chains;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Chain")
+	UCableComponent* CurrentChain;
 
 	UFUNCTION(BlueprintCallable, Category = "Chain")
-	void CreateConnection(FVector &Position);
+	UCableComponent* CreateConnection(AActor* CollidedActor);
 
 	UFUNCTION(BlueprintCallable, Category = "Chain")
 	float GetTotalChainLengthUsed() { return TotalChainLengthUsed; }
-
-	UFUNCTION(BlueprintCallable, Category = "Chain")
-	void SetLastConnectionPosition(const FVector& Position) { LastConnectionPosition = Position; }
 
 	float CalculateDistance(const FVector& Pos1, const FVector& Pos2) { return FVector::Dist(Pos1, Pos2); }
 
