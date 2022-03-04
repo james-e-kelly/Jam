@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "TP_ThirdPersonCharacter.generated.h"
 
+//class UCableComponent;
+
 UCLASS(config=Game)
 class ATP_ThirdPersonCharacter : public ACharacter
 {
@@ -18,6 +20,7 @@ class ATP_ThirdPersonCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+
 public:
 	ATP_ThirdPersonCharacter();
 
@@ -28,6 +31,21 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Chain")
+	class UCableComponent* CableComponent;
+
+	UFUNCTION(BlueprintCallable, Category = "Chain")
+	void CreateConnection(FVector &Position);
+
+	UFUNCTION(BlueprintCallable, Category = "Chain")
+	float GetTotalChainLengthUsed() { return TotalChainLengthUsed; }
+
+	UFUNCTION(BlueprintCallable, Category = "Chain")
+	void SetLastConnectionPosition(const FVector& Position) { LastConnectionPosition = Position; }
+
+	float CalculateDistance(const FVector& Pos1, const FVector& Pos2) { return FVector::Dist(Pos1, Pos2); }
 
 protected:
 
@@ -65,5 +83,10 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+private:
+	float TotalChainLengthUsed = 0.0f;
+
+	FVector LastConnectionPosition;
 };
 
