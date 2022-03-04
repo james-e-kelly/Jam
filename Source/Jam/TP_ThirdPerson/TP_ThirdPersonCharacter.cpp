@@ -6,6 +6,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
+//#include "CableComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -121,4 +122,15 @@ void ATP_ThirdPersonCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+}
+
+void ATP_ThirdPersonCharacter::CreateConnection(FVector& Position)
+{
+	//if (CableComponent)
+	//{
+	//	if (GetWorld())
+	//	{
+	//		UCableComponent* chain = NewObject<UCableComponent>(this->GetOwner(), UCableComponent::StaticClass)
+	//	}
+	//}
 }
