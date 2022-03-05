@@ -129,6 +129,7 @@ UCableComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActo
     if (CurrentChain)
     {
         TotalChainLengthUsed += CurrentChain->GetOwner()->GetDistanceTo(CollidedActor);
+		CurrentChain->CableLength = CurrentChain->GetOwner()->GetDistanceTo(CollidedActor);
         CurrentChain->SetAttachEndTo(CollidedActor, NAME_None);
     }
     
