@@ -136,6 +136,7 @@ UCableComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActo
     // New cable starts at collided actor and ends at the player
     UCableComponent* Chain = Cast<UCableComponent>(CollidedActor->AddComponentByClass(UCableComponent::StaticClass(), false, Transform, false));
     Chain->SetAttachEndTo(this, NAME_None);
+	Chain->EndLocation = ConnectionLocation;
     Chains.Add(Chain);
     CurrentChain = Chain;
     
@@ -145,4 +146,23 @@ UCableComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActo
     }
     
 	return CurrentChain;
+}
+
+bool ATP_ThirdPersonCharacter::PluggedInSocket(AActor* CollidedActor, FTransform Transform)
+{
+	if (CurrentChain)
+	{
+		TotalChainLengthUsed += CurrentChain->GetOwner()->GetDistanceTo(CollidedActor);
+		CurrentChain->CableLength = CurrentChain->GetOwner()->GetDistanceTo(CollidedActor);
+		CurrentChain->SetAttachEndTo(CollidedActor, NAME_None);
+		CurrentChain->EndLocation = Transform.GetLocation();
+		CurrentChain = nullptr;
+
+		if (OnCableConnectionAdded.IsBound())
+		{
+			OnCableConnectionAdded.Broadcast(this, CurrentChain);
+		}
+		return true;
+	}
+	return false;
 }
