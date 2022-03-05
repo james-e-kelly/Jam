@@ -129,13 +129,13 @@ UCableComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActo
     // Detach current chain from this character and attach to the collided actor
     if (CurrentChain)
     {
+        TotalChainLengthUsed += CurrentChain->GetOwner()->GetDistanceTo(CollidedActor);
         CurrentChain->SetAttachEndTo(CollidedActor, NAME_None);
     }
     
     // New cable starts at collided actor and ends at the player
     UCableComponent* Chain = Cast<UCableComponent>(CollidedActor->AddComponentByClass(UCableComponent::StaticClass(), false, FTransform(), false));
     Chain->SetAttachEndTo(this, NAME_None);
-    TotalChainLengthUsed += GetDistanceTo(CollidedActor);
     Chains.Add(Chain);
     CurrentChain = Chain;
     
