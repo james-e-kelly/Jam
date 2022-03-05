@@ -1,0 +1,23 @@
+# Include Win32
+!Binaries/Win32/*.lib
+!Binaries/Win32/*.dll
+
+# Include Win64
+!Binaries/Win64/*.lib
+!Binaries/Win64/*.dll
+
+# Include Mac
+!Libs/*/**
+
+# Include Android
+!Binaries/Android/
+!Binaries/Android/**/*.so
+
+# Include IOS
+!Binaries/IOS/*.a
+
+# Include TVOS
+!Binaries/TVOS/*.a
+
+# Don't track anything with the UE4 preface. These are built by the engine
+*UE4*.*
