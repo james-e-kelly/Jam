@@ -17,6 +17,10 @@
 		{
 			"Name": "CableComponent",
 			"Enabled": true
-		}
+		},
+        {
+            "Name": "FMODStudio",
+            "Enabled": true
+        }
 	]
 }
