@@ -125,25 +125,28 @@ void ATP_ThirdPersonCharacter::MoveRight(float Value)
 
 UChainComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActor, FTransform Transform)
 {
-    // Detach current chain from this character and attach to the collided actor
-    if (CurrentChain)
-    {
-        TotalChainLengthUsed += CurrentChain->GetOwner()->GetDistanceTo(CollidedActor);
-		CurrentChain->CableLength = CurrentChain->GetOwner()->GetDistanceTo(CollidedActor);
-        CurrentChain->SetAttachEndTo(CollidedActor, NAME_None);
-		CurrentChain->EndLocation = Transform.GetLocation();
-    }
-    // New cable starts at collided actor and ends at the player
-    UChainComponent* Chain = Cast<UChainComponent>(CollidedActor->AddComponentByClass(UChainComponent::StaticClass(), false, Transform, false));
-    Chain->SetAttachEndTo(this, NAME_None);
-	Chain->EndLocation = ConnectionLocation;
-    Chains.Add(Chain);
-    CurrentChain = Chain;
+	if (bHasPickedUpCable)
+	{
+		// Detach current chain from this character and attach to the collided actor
+		if (CurrentChain)
+		{
+			TotalChainLengthUsed += CurrentChain->GetOwner()->GetDistanceTo(CollidedActor);
+			CurrentChain->CableLength = CurrentChain->GetOwner()->GetDistanceTo(CollidedActor);
+			CurrentChain->SetAttachEndTo(CollidedActor, NAME_None);
+			CurrentChain->EndLocation = Transform.GetLocation();
+		}
+		// New cable starts at collided actor and ends at the player
+		UChainComponent* Chain = Cast<UChainComponent>(CollidedActor->AddComponentByClass(UChainComponent::StaticClass(), false, Transform, false));
+		Chain->SetAttachEndTo(this, NAME_None);
+		Chain->EndLocation = ConnectionLocation;
+		Chains.Add(Chain);
+		CurrentChain = Chain;
     
-    if (OnCableConnectionAdded.IsBound())
-    {
-        OnCableConnectionAdded.Broadcast(this, CurrentChain);
-    }
+		if (OnCableConnectionAdded.IsBound())
+		{
+			OnCableConnectionAdded.Broadcast(this, CurrentChain);
+		}
+	}
     
 	return CurrentChain;
 }

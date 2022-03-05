@@ -53,6 +53,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Chain")
 	FVector ConnectionLocation;
 
+	UPROPERTY(BlueprintReadWrite, Category = "Chain")
+	bool bHasPickedUpCable = true;
+
     UPROPERTY(BlueprintAssignable)
     FOnCableConnectionAdded OnCableConnectionAdded;
 
