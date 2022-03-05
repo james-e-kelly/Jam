@@ -42,7 +42,7 @@ public:
 	UCableComponent* CurrentChain;
 
 	UFUNCTION(BlueprintCallable, Category = "Chain")
-	UCableComponent* CreateConnection(AActor* CollidedActor);
+	UCableComponent* CreateConnection(AActor* CollidedActor, FTransform Transform);
 
 	UFUNCTION(BlueprintCallable, Category = "Chain")
 	float GetTotalChainLengthUsed() { return TotalChainLengthUsed; }
