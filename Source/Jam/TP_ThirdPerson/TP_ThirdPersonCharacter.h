@@ -84,7 +84,7 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
-private:
+protected:
     
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float TotalChainLengthUsed = 0.0f;

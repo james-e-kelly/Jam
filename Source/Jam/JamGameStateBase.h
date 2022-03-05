@@ -13,5 +13,5 @@ UCLASS()
 class JAM_API AJamGameStateBase : public AGameStateBase
 {
 	GENERATED_BODY()
-	
+    
 };

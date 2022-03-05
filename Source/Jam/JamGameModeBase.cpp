@@ -2,4 +2,9 @@
 
 
 #include "JamGameModeBase.h"
+#include "JamLevelStart.h"
 
+AJamGameModeBase::AJamGameModeBase()
+{
+    LevelStartClass = AJamLevelStart::StaticClass();
+}
