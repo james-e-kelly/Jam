@@ -85,6 +85,8 @@ public:
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 private:
+    
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	float TotalChainLengthUsed = 0.0f;
 
 	FVector LastConnectionPosition;
