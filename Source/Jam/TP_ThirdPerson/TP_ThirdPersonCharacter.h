@@ -45,6 +45,9 @@ public:
 	UCableComponent* CreateConnection(AActor* CollidedActor, FTransform Transform);
 
 	UFUNCTION(BlueprintCallable, Category = "Chain")
+	bool PluggedInSocket(AActor* CollidedActor, FTransform Transform);
+
+	UFUNCTION(BlueprintCallable, Category = "Chain")
 	float GetTotalChainLengthUsed() { return TotalChainLengthUsed; }
 
     UPROPERTY(BlueprintAssignable)
