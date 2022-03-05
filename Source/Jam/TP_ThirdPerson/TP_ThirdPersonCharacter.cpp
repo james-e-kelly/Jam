@@ -146,6 +146,18 @@ UChainComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActo
 		{
 			OnCableConnectionAdded.Broadcast(this, CurrentChain);
 		}
+
+		if (TotalChainLengthUsed >= MaximumChainLength)
+		{
+			OnCableLengthExceeded.Broadcast();
+			for (UChainComponent* ChainComponent : Chains)
+			{
+				ChainComponent->DestroyComponent();
+			}
+			Chains.Empty();
+			TotalChainLengthUsed = 0.0f;
+			bHasPickedUpCable = false;
+		}
 	}
     
 	return CurrentChain;

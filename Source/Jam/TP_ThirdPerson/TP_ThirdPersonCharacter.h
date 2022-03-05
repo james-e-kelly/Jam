@@ -9,6 +9,7 @@ class UChainComponent;
 class ATP_ThirdPersonCharacter;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCableConnectionAdded, ATP_ThirdPersonCharacter*, Character, UChainComponent*, Cable);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCableLengthExceeded);
 
 UCLASS(config=Game)
 class ATP_ThirdPersonCharacter : public ACharacter
@@ -44,6 +45,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Chain")
 	UChainComponent* CreateConnection(AActor* CollidedActor, FTransform Transform);
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chain")
+	float MaximumChainLength = 2000.0f;
+
 	UFUNCTION(BlueprintCallable, Category = "Chain")
 	bool PluggedInSocket(AActor* CollidedActor, FTransform Transform);
 
@@ -58,6 +62,9 @@ public:
 
     UPROPERTY(BlueprintAssignable)
     FOnCableConnectionAdded OnCableConnectionAdded;
+
+	UPROPERTY(BlueprintAssignable, Category = "Chain")
+	FOnCableLengthExceeded OnCableLengthExceeded;
 
 protected:
 
