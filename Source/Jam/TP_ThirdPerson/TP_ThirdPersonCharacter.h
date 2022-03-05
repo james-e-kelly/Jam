@@ -7,6 +7,9 @@
 #include "TP_ThirdPersonCharacter.generated.h"
 
 class UCableComponent;
+class ATP_ThirdPersonCharacter;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCableConnectionAdded, ATP_ThirdPersonCharacter*, Character, UCableComponent*, Cable);
 
 UCLASS(config=Game)
 class ATP_ThirdPersonCharacter : public ACharacter
@@ -45,7 +48,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Chain")
 	float GetTotalChainLengthUsed() { return TotalChainLengthUsed; }
 
-	float CalculateDistance(const FVector& Pos1, const FVector& Pos2) { return FVector::Dist(Pos1, Pos2); }
+    UPROPERTY(BlueprintAssignable)
+    FOnCableConnectionAdded OnCableConnectionAdded;
 
 protected:
 

@@ -139,5 +139,10 @@ UCableComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActo
     Chains.Add(Chain);
     CurrentChain = Chain;
     
+    if (OnCableConnectionAdded.IsBound())
+    {
+        OnCableConnectionAdded.Broadcast(this, CurrentChain);
+    }
+    
 	return CurrentChain;
 }
