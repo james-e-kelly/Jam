@@ -5,10 +5,10 @@
 #include "GameFramework/Character.h"
 #include "TP_ThirdPersonCharacter.generated.h"
 
-class UCableComponent;
+class UChainComponent;
 class ATP_ThirdPersonCharacter;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCableConnectionAdded, ATP_ThirdPersonCharacter*, Character, UCableComponent*, Cable);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCableConnectionAdded, ATP_ThirdPersonCharacter*, Character, UChainComponent*, Cable);
 
 UCLASS(config=Game)
 class ATP_ThirdPersonCharacter : public ACharacter
@@ -36,13 +36,13 @@ public:
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Chain")
-	TArray<UCableComponent*> Chains;
+	TArray<UChainComponent*> Chains;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Chain")
-	UCableComponent* CurrentChain;
+	UChainComponent* CurrentChain;
 
 	UFUNCTION(BlueprintCallable, Category = "Chain")
-	UCableComponent* CreateConnection(AActor* CollidedActor, FTransform Transform);
+	UChainComponent* CreateConnection(AActor* CollidedActor, FTransform Transform);
 
 	UFUNCTION(BlueprintCallable, Category = "Chain")
 	bool PluggedInSocket(AActor* CollidedActor, FTransform Transform);

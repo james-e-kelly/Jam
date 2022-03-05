@@ -5,7 +5,7 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
-#include "CableComponent.h"
+#include "../ChainComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -123,7 +123,7 @@ void ATP_ThirdPersonCharacter::MoveRight(float Value)
 	}
 }
 
-UCableComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActor, FTransform Transform)
+UChainComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActor, FTransform Transform)
 {
     // Detach current chain from this character and attach to the collided actor
     if (CurrentChain)
@@ -134,7 +134,7 @@ UCableComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActo
 		CurrentChain->EndLocation = Transform.GetLocation();
     }
     // New cable starts at collided actor and ends at the player
-    UCableComponent* Chain = Cast<UCableComponent>(CollidedActor->AddComponentByClass(UCableComponent::StaticClass(), false, Transform, false));
+    UChainComponent* Chain = Cast<UChainComponent>(CollidedActor->AddComponentByClass(UChainComponent::StaticClass(), false, Transform, false));
     Chain->SetAttachEndTo(this, NAME_None);
 	Chain->EndLocation = ConnectionLocation;
     Chains.Add(Chain);

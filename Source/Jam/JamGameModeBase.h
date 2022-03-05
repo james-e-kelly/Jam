@@ -7,7 +7,7 @@
 
 class AJamLevelStart;
 class ATP_ThirdPersonCharacter;
-class UCableComponent;
+class UChainComponent;
 
 /**
  * 
@@ -36,7 +36,7 @@ protected:
     float MaxDistanceAllowed;
     
     UFUNCTION()
-    void OnCharacterCreateCable(ATP_ThirdPersonCharacter* Character, UCableComponent* CableComponentAdded);
+    void OnCharacterCreateChain(ATP_ThirdPersonCharacter* Character, UChainComponent* ChainComponentAdded);
     
 public:
     

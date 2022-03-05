@@ -3,7 +3,7 @@
 #include "JamGameModeBase.h"
 #include "JamLevelStart.h"
 #include "TP_ThirdPerson/TP_ThirdPersonCharacter.h"
-#include "CableComponent.h"
+#include "ChainComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "EngineUtils.h"
 
@@ -22,7 +22,7 @@ void AJamGameModeBase::StartPlay()
     
     if (PlayerCharacter)
     {
-        PlayerCharacter->OnCableConnectionAdded.AddDynamic(this, &AJamGameModeBase::OnCharacterCreateCable);
+        PlayerCharacter->OnCableConnectionAdded.AddDynamic(this, &AJamGameModeBase::OnCharacterCreateChain);
     }
     
     TActorIterator<AJamLevelStart> StartIterator = TActorIterator<AJamLevelStart>(GetWorld());
@@ -41,7 +41,7 @@ void AJamGameModeBase::StartPlay()
     }
 }
 
-void AJamGameModeBase::OnCharacterCreateCable(ATP_ThirdPersonCharacter* Character, UCableComponent* CableComponentAdded)
+void AJamGameModeBase::OnCharacterCreateChain(ATP_ThirdPersonCharacter* Character, UChainComponent* ChainComponentAdded)
 {
     float CurrentLength = PlayerCharacter->GetTotalChainLengthUsed();
     
