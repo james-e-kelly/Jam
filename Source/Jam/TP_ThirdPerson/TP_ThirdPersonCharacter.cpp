@@ -136,6 +136,7 @@ UCableComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActo
     // New cable starts at collided actor and ends at the player
     UCableComponent* Chain = Cast<UCableComponent>(CollidedActor->AddComponentByClass(UCableComponent::StaticClass(), false, Transform, false));
     Chain->SetAttachEndTo(this, NAME_None);
+	Chain->EndLocation = ConnectionLocation;
     Chains.Add(Chain);
     CurrentChain = Chain;
     

@@ -48,7 +48,10 @@ public:
 	bool PluggedInSocket(AActor* CollidedActor, FTransform Transform);
 
 	UFUNCTION(BlueprintCallable, Category = "Chain")
-	float GetTotalChainLengthUsed() { return TotalChainLengthUsed; }
+	float GetTotalChainLengthUsed() { return TotalChainLengthUsed;}
+
+	UPROPERTY(BlueprintReadWrite, Category = "Chain")
+	FVector ConnectionLocation;
 
     UPROPERTY(BlueprintAssignable)
     FOnCableConnectionAdded OnCableConnectionAdded;
