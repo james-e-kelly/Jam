@@ -8,7 +8,7 @@ public class Jam : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "CableComponent", "FMODStudio" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "CableComponent" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] { "CableComponent" });
 		PrivateIncludePathModuleNames.AddRange(new string[] { "CableComponent" });
