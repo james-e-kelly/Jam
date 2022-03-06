@@ -23,6 +23,9 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadOnly)
     UFMODEvent* GameplayMusic;
     
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
+    UFMODEvent* ThemeMusic;
+    
 public:
     
     UFUNCTION(BlueprintCallable)
@@ -30,6 +33,9 @@ public:
     
     UFUNCTION(BlueprintCallable)
     void PlayGameplayMusic();
+    
+    UFUNCTION(BlueprintCallable)
+    void PlayThemeMusic();
     
 private:
     
@@ -39,4 +45,5 @@ private:
     
     FMOD::Studio::EventInstance* MenuMusicInstance;
     FMOD::Studio::EventInstance* GameplayMusicInstance;
+    FMOD::Studio::EventInstance* ThemeMusicInstance;
 };

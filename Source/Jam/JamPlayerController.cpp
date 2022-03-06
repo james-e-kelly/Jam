@@ -6,13 +6,22 @@
 void AJamPlayerController::PlayMenuMusic()
 {
     StopAndReleaseEvent(GameplayMusicInstance);
+    StopAndReleaseEvent(ThemeMusicInstance);
     PlayEvent(MenuMusic);
 }
 
 void AJamPlayerController::PlayGameplayMusic()
 {
     StopAndReleaseEvent(MenuMusicInstance);
+    StopAndReleaseEvent(ThemeMusicInstance);
     PlayEvent(GameplayMusic);
+}
+
+void AJamPlayerController::PlayThemeMusic()
+{
+    StopAndReleaseEvent(MenuMusicInstance);
+    StopAndReleaseEvent(GameplayMusicInstance);
+    PlayEvent(ThemeMusic);
 }
 
 FMOD::Studio::EventInstance* AJamPlayerController::PlayEvent(UFMODEvent* Event)
