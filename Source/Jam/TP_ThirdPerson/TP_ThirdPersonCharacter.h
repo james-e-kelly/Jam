@@ -11,6 +11,7 @@ class ATP_ThirdPersonCharacter;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCableConnectionAdded, ATP_ThirdPersonCharacter*, Character, UChainComponent*, Cable);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCableLengthExceeded);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnLevelFinished);
 
 UCLASS(config=Game)
 class ATP_ThirdPersonCharacter : public ACharacter
@@ -35,6 +36,13 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool LevelFinished = false;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnLevelFinished OnLevelFinished;
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Chain")
