@@ -6,6 +6,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "../ChainComponent.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -41,6 +42,20 @@ ATP_ThirdPersonCharacter::ATP_ThirdPersonCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+
+	TailSparksComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("TailSparksComponent"));
+	TailSparksComponent->SetupAttachment(GetMesh());
+	TailSparksComponent->SetRelativeLocation(GetActorLocation() + FVector(0.0f, -150.0f, 170.0f));
+	TailSparksComponent->bAutoActivate = true;
+	TailSparksComponent->SetActive(true);
+
+	// initialise it with the dash particles
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>
+		TailSparksAsset(TEXT("ParticleSystem'/Game/Art/particleFX/othersparks.othersparks'"));
+	if (TailSparksAsset.Succeeded())
+	{
+		TailSparksComponent->SetTemplate(TailSparksAsset.Object);
+	}
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)

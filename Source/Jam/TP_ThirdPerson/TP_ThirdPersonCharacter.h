@@ -6,6 +6,7 @@
 #include "TP_ThirdPersonCharacter.generated.h"
 
 class UChainComponent;
+class UParticleSystemComponent;
 class ATP_ThirdPersonCharacter;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnCableConnectionAdded, ATP_ThirdPersonCharacter*, Character, UChainComponent*, Cable);
@@ -65,6 +66,10 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category = "Chain")
 	FOnCableLengthExceeded OnCableLengthExceeded;
+
+public:
+	UPROPERTY(VisibleAnywhere, Category = "Particles")
+	UParticleSystemComponent* TailSparksComponent;
 
 protected:
 
