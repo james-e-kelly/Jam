@@ -55,6 +55,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Chain")
 	float GetTotalChainLengthUsed() { return TotalChainLengthUsed;}
 
+	UFUNCTION(BlueprintCallable, Category = "Chain")
+	void ResetTotalChainLengthUsed() { TotalChainLengthUsed = 0.0f; }
+
 	UPROPERTY(BlueprintReadWrite, Category = "Chain")
 	FVector ConnectionLocation;
 
@@ -70,6 +73,26 @@ public:
 public:
 	UPROPERTY(VisibleAnywhere, Category = "Particles")
 	UParticleSystemComponent* TailSparksComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "Particles")
+	UParticleSystemComponent* RunDustComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Particles")
+	TArray<FVector> FeetLocations;
+
+	UPROPERTY()
+	FTimerHandle RunDustTimer;
+
+	bool bTimerStarted = false;
+
+	UFUNCTION()
+	void ActivateFeetParticles();
+
+	UFUNCTION()
+	void SetupRunDustTimer();
+
+	UFUNCTION()
+	void ResetRunDustTimer();
 
 protected:
 

@@ -7,6 +7,7 @@
 #include "GameFramework/Controller.h"
 #include "../ChainComponent.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "GameFramework/SpringArmComponent.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -57,6 +58,19 @@ ATP_ThirdPersonCharacter::ATP_ThirdPersonCharacter()
 		TailSparksComponent->SetTemplate(TailSparksAsset.Object);
 	}
 
+	RunDustComponent = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("RunDustComponent"));
+	RunDustComponent->SetupAttachment(RootComponent);
+	RunDustComponent->bAutoActivate = false;
+	RunDustComponent->SetActive(false);
+
+	// initialise it with the dash particles
+	static ConstructorHelpers::FObjectFinder<UParticleSystem>
+		RunDustAsset(TEXT("ParticleSystem'/Game/Art/particleFX/RunDust.RunDust'"));
+	if (RunDustAsset.Succeeded())
+	{
+		RunDustComponent->SetTemplate(RunDustAsset.Object);
+	}
+
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 }
@@ -70,6 +84,7 @@ void ATP_ThirdPersonCharacter::SetupPlayerInputComponent(class UInputComponent* 
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	PlayerInputComponent->BindAction("ResetDustTimer", IE_Released, this, &ATP_ThirdPersonCharacter::ResetRunDustTimer);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ATP_ThirdPersonCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ATP_ThirdPersonCharacter::MoveRight);
@@ -120,6 +135,11 @@ void ATP_ThirdPersonCharacter::MoveForward(float Value)
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
+
+		if (!bTimerStarted)
+		{
+			ActivateFeetParticles();
+		}
 	}
 }
 
@@ -135,6 +155,11 @@ void ATP_ThirdPersonCharacter::MoveRight(float Value)
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
+
+		if (!bTimerStarted)
+		{
+			ActivateFeetParticles();
+		}
 	}
 }
 
@@ -195,4 +220,33 @@ bool ATP_ThirdPersonCharacter::PluggedInSocket(AActor* CollidedActor, FTransform
 		return true;
 	}
 	return false;
+}
+
+void ATP_ThirdPersonCharacter::ActivateFeetParticles()
+{
+	int32 Index = FMath::RandRange(0, FeetLocations.Num() - 1);
+	//FVector Location = FeetLocations[Index];
+
+	RunDustComponent->SetRelativeLocation(FVector(0,0,0));
+	RunDustComponent->SetActive(true);
+	RunDustComponent->ActivateSystem(true);
+
+	bTimerStarted = true;
+	float InRate = FMath::RandRange(0.0f, 0.005f);
+	GetWorld()->GetTimerManager().SetTimer(RunDustTimer, this, &ATP_ThirdPersonCharacter::ResetRunDustTimer, InRate, true, true);
+}
+
+void ATP_ThirdPersonCharacter::SetupRunDustTimer()
+{
+	bTimerStarted = true;
+
+	float InRate = FMath::RandRange(0.0f, 0.5f);
+
+	GetWorld()->GetTimerManager().SetTimer(RunDustTimer, this, &ATP_ThirdPersonCharacter::ActivateFeetParticles, InRate, true, true);
+}
+
+void ATP_ThirdPersonCharacter::ResetRunDustTimer()
+{
+	bTimerStarted = false;
+	GetWorld()->GetTimerManager().ClearTimer(RunDustTimer);
 }
