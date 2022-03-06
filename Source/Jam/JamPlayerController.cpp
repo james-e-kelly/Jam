@@ -5,23 +5,41 @@
 
 void AJamPlayerController::PlayMenuMusic()
 {
-    StopAndReleaseEvent(GameplayMusicInstance);
-    StopAndReleaseEvent(ThemeMusicInstance);
-    PlayEvent(MenuMusic);
+    StopMusic();
+    MenuMusicInstance = PlayEvent(MenuMusic);
 }
 
 void AJamPlayerController::PlayGameplayMusic()
 {
-    StopAndReleaseEvent(MenuMusicInstance);
-    StopAndReleaseEvent(ThemeMusicInstance);
-    PlayEvent(GameplayMusic);
+    StopMusic();
+    GameplayMusicInstance = PlayEvent(GameplayMusic);
+}
+
+void AJamPlayerController::PlayCinematicMusic()
+{
+    StopMusic();
+    CinematicMusicInstance = PlayEvent(CinematicMusic);
 }
 
 void AJamPlayerController::PlayThemeMusic()
 {
+    StopMusic();
+    ThemeMusicInstance = PlayEvent(ThemeMusic);
+}
+
+void AJamPlayerController::StopMusic()
+{
     StopAndReleaseEvent(MenuMusicInstance);
     StopAndReleaseEvent(GameplayMusicInstance);
-    PlayEvent(ThemeMusic);
+    StopAndReleaseEvent(ThemeMusicInstance);
+    StopAndReleaseEvent(CinematicMusicInstance);
+}
+
+void AJamPlayerController::BeginPlay()
+{
+    Super::BeginPlay();
+    
+    PlayThemeMusic();
 }
 
 FMOD::Studio::EventInstance* AJamPlayerController::PlayEvent(UFMODEvent* Event)
