@@ -192,7 +192,10 @@ UChainComponent* ATP_ThirdPersonCharacter::CreateConnection(AActor* CollidedActo
 			OnCableLengthExceeded.Broadcast();
 			for (UChainComponent* ChainComponent : Chains)
 			{
-				ChainComponent->DestroyComponent();
+				if (ChainComponent)
+				{
+					ChainComponent->DestroyComponent();
+				}
 			}
 			Chains.Empty();
 			TotalChainLengthUsed = 0.0f;
