@@ -47,7 +47,7 @@ public:
 	UChainComponent* CreateConnection(AActor* CollidedActor, FTransform Transform);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Chain")
-	float MaximumChainLength = 2000.0f;
+	float MaximumChainLength = 200000.0f;
 
 	UFUNCTION(BlueprintCallable, Category = "Chain")
 	bool PluggedInSocket(AActor* CollidedActor, FTransform Transform);
