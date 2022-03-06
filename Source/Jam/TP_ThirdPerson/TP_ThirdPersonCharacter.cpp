@@ -225,9 +225,9 @@ bool ATP_ThirdPersonCharacter::PluggedInSocket(AActor* CollidedActor, FTransform
 void ATP_ThirdPersonCharacter::ActivateFeetParticles()
 {
 	int32 Index = FMath::RandRange(0, FeetLocations.Num() - 1);
-	//FVector Location = FeetLocations[Index];
+	FVector Location = FeetLocations[Index];
 
-	RunDustComponent->SetRelativeLocation(FVector(0,0,0));
+	RunDustComponent->SetRelativeLocation(Location);
 	RunDustComponent->SetActive(true);
 	RunDustComponent->ActivateSystem(true);
 
